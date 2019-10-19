@@ -8,7 +8,7 @@ class Source(Base):
         Base.__init__(self, vim)
 
         self.name = 'unicode'
-        self.kind = 'unicode'
+        self.kind = 'word'
 
     def gather_candidates(self, context):
         candidates = []

@@ -18,6 +18,9 @@ class Source(Base):
 
     def gather_candidates(self, context):
         candidates = []
-        for [ugroup, path] in self.vim.eval("map(split(globpath(g:unite_unicode_data_path, '*.txt'), '\n'), '[fnamemodify(v:val, \":t:r\"), fnamemodify(v:val, \":p\")]')"):
-            candidates += [ugroup]
+        for [ugroup, path] in self.vim.call("unicode#groups"):
+            candidates.append({
+                'kind': 'unicode',
+                'word': ugroup
+                })
         return candidates

@@ -14,15 +14,10 @@ class Source(Base):
         Base.__init__(self, vim)
 
         self.name = 'unicode'
-        self.kind = 'word'
+        self.kind = 'unicode'
 
     def gather_candidates(self, context):
-        self.vim.call('neoyank#update')
         candidates = []
-        for [register, history] in self.vim.call(
-                'neoyank#_get_yank_histories').items():
-            candidates += [{
-                'word': register + ': ' + re.sub(r'\n', r'\\n', x[0])[:200],
-                'action__text': x[0],
-            } for x in history]
+        for [ugroup, path] in self.vim.eval("map(split(globpath(g:unite_unicode_data_path, '*.txt'), '\n'), '[fnamemodify(v:val, \":t:r\"), fnamemodify(v:val, \":p\")]')"):
+            candidates += [ugroup]
         return candidates
